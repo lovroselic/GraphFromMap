@@ -92,4 +92,4 @@ for node, el in MAPDICT.items():
         edge_colors.append(ec)
 
 label_dict = {node: str(node) + "-" + el["name"] for node, el in MAPDICT.items()}
-nx.draw(G, labels=label_dict, with_labels=True, font_size=8, edge_color=edge_colors)
+nx.draw(G, labels=label_dict, with_labels=True, font_size=7, edge_color=edge_colors, node_size=500)
