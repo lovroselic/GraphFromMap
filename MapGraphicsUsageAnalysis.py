@@ -3,9 +3,8 @@
 Created on Thu Oct  5 07:59:53 2023
 
 @author: lovro
-v 0.1.0
+v 0.2.0
 
-https://networkx.org/documentation/stable/reference/introduction.html
 """
 
 
@@ -28,7 +27,7 @@ Decals = defaultdict(int)
 
 
 for room in MAP:
-    for t in ["wall"]:
+    for t in ["wall", "floor", "ceil"]:
         texture = re.search(re.compile(r'{}:\s\"(.*)\"'.format(t)), room).group(1)
         Textures[texture] += 1
     decals = re.search(decal_regex, room)

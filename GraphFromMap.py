@@ -3,7 +3,7 @@
 Created on Thu Oct  5 07:59:53 2023
 
 @author: lovro
-v 0.1.0
+v 0.2.0
 
 https://networkx.org/documentation/stable/reference/introduction.html
 """
@@ -61,6 +61,7 @@ MAP = re.split(r'\n\s*\,', MAP)
 MAPDICT = dict()
 
 for room in MAP:
+    # print(room)
     roomId = re.search(room_id_regex, room).group(0)
     roomName = re.search(room_name_regex, room).group(1)
     initDictElement(MAPDICT, int(roomId))
