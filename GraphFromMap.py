@@ -10,6 +10,7 @@ https://networkx.org/documentation/stable/reference/introduction.html
 
 
 import networkx as nx
+import matplotlib.pyplot as plt
 import regex as re
 
 
@@ -37,6 +38,8 @@ def getColor(col):
         return "#FFD700"
     if col == "Silver":
         return "#C0C0C0"
+    if col == "Emerald":
+        return "#50C878"
     return col
 
 
@@ -54,7 +57,7 @@ with open(_file, encoding="utf8") as fh:
 
 map_regex = re.compile(r'const\sMAP\s=\s{([\w\W]*)};')
 room_id_regex = re.compile(r'\d+')
-room_name_regex = re.compile(r'name:\s*\"([\w\s]*)\"')
+room_name_regex = re.compile(r'name:\s*\"([\w\s\-\?]*)\"')
 gates_regex = re.compile(r'gates:\s*\'(.*)\'')
 MAP = re.search(map_regex, data).group(1).strip()
 MAP = re.split(r'\n\s*\,', MAP)
@@ -64,10 +67,14 @@ for room in MAP:
     # print(room)
     roomId = re.search(room_id_regex, room).group(0)
     roomName = re.search(room_name_regex, room).group(1)
+    print(roomId, roomName)
     initDictElement(MAPDICT, int(roomId))
 
 for room in MAP:
-    gates = re.search(gates_regex, room).group(1)[1:-1]
+    gates = re.search(gates_regex, room)
+    if gates is None:
+        continue
+    gates = gates.group(1)[1:-1]
     gates = re.split(r'\],\[', gates)
     gates = [g.strip("[]") for g in gates]
     gates = [g.split(",")[2:] for g in gates]
@@ -93,4 +100,5 @@ for node, el in MAPDICT.items():
         edge_colors.append(ec)
 
 label_dict = {node: str(node) + "-" + el["name"] for node, el in MAPDICT.items()}
+plt.figure(1, figsize=(10, 10), dpi=120)
 nx.draw(G, labels=label_dict, with_labels=True, font_size=7, edge_color=edge_colors, node_size=500)
